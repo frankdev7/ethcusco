@@ -10,7 +10,7 @@ export default function Home() {
   const date = new Date().toISOString();
   const [provider, setProvider] = useState<any>()
   const [contract, setContract] = useState<Contract>()
-  const [temperature, setTemperature] = useState<number>(0)
+  const [temperature, setTemperature] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_WSS_ALCHEMY)
@@ -25,15 +25,25 @@ export default function Home() {
 
   useEffect(() => {
     if (contract && process.env.NEXT_PUBLIC_EVENT) {
+
+      const getTemperature = async () => {
+        const initialTemperature = await contract.price(); // Cambia "getTemperature" por el método correcto en tu contrato
+        setTemperature(initialTemperature.toNumber().toString());
+      }
+      getTemperature();
+
       contract.on(process.env.NEXT_PUBLIC_EVENT, (requestId: string, price: ethers.BigNumber) => {
-        setTemperature(price.toNumber());
+        setTemperature(price.toNumber().toString());
       });
     }
   }, [contract]);
 
+
+
   return (
     <>
-      <PageData temperature={temperature} />
+      <PageData temperature={temperature !== undefined ? temperature : "..."} />
+
     </>
   );
 

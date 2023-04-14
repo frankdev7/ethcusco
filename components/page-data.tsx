@@ -2,7 +2,7 @@ import { Footer } from "./footer";
 import { Illustration } from "./illustration";
 
 interface Props {
-  temperature: number;
+  temperature: string;
 }
 export function PageData({ temperature }: Props) {
 
@@ -32,7 +32,7 @@ export function PageData({ temperature }: Props) {
           <div className="info">
             <span>Current Temperature</span>
             <strong>
-              {temperature}°C
+              {temperature}
             </strong>
           </div>
         </div>
