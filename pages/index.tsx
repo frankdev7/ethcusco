@@ -13,17 +13,18 @@ export default function Home() {
   const [temperature, setTemperature] = useState<number>(0)
 
   useEffect(() => {
-    setProvider(new ethers.providers.WebSocketProvider(process.env.NEXT_PUBLIC_WSS_ALCHEMY));
+    if (process.env.NEXT_PUBLIC_WSS_ALCHEMY)
+      setProvider(new ethers.providers.WebSocketProvider(process.env.NEXT_PUBLIC_WSS_ALCHEMY));
   }, [])
 
   useEffect(() => {
-    if (provider !== undefined) {
+    if (provider && process.env.NEXT_PUBLIC_CONTRACT_ADDRESS) {
       setContract(new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS, ABI_APIConsumer, provider));
     }
   }, [provider])
 
   useEffect(() => {
-    if (contract !== undefined) {
+    if (contract && process.env.NEXT_PUBLIC_EVENT) {
       contract.on(process.env.NEXT_PUBLIC_EVENT, (requestId: string, price: ethers.BigNumber) => {
         setTemperature(price.toNumber());
       });

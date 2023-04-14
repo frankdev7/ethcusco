@@ -64,7 +64,7 @@ export function Footer() {
 
       <a
         target="_blank"
-        href="https://github.com/steven-tey/weathergpt"
+        href="https://github.com/frankdev7/ethcusco"
         className="source"
         rel="noreferrer"
       >
