@@ -27,7 +27,7 @@ export default function Home() {
     if (contract && process.env.NEXT_PUBLIC_EVENT) {
 
       const getTemperature = async () => {
-        const initialTemperature = await contract.price(); // Cambia "getTemperature" por el método correcto en tu contrato
+        const initialTemperature = await contract.price();
         setTemperature(initialTemperature.toNumber().toString());
       }
       getTemperature();
