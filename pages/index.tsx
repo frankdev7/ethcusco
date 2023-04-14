@@ -7,7 +7,6 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
 
-  const date = new Date().toISOString();
   const [provider, setProvider] = useState<any>()
   const [contract, setContract] = useState<Contract>()
   const [temperature, setTemperature] = useState<string | undefined>(undefined)
@@ -17,15 +16,16 @@ export default function Home() {
       setProvider(new ethers.providers.WebSocketProvider(process.env.NEXT_PUBLIC_WSS_ALCHEMY));
   }, [])
 
+
   useEffect(() => {
     if (provider && process.env.NEXT_PUBLIC_CONTRACT_ADDRESS) {
       setContract(new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS, ABI_APIConsumer, provider));
     }
   }, [provider])
 
+
   useEffect(() => {
     if (contract && process.env.NEXT_PUBLIC_EVENT) {
-
       const getTemperature = async () => {
         const initialTemperature = await contract.price();
         setTemperature(initialTemperature.toNumber().toString());
@@ -37,7 +37,6 @@ export default function Home() {
       });
     }
   }, [contract]);
-
 
 
   return (
